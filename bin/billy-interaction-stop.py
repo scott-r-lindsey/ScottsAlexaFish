@@ -2,22 +2,20 @@
 
 import os
 import signal
+import sys
 from time import sleep
 import RPi.GPIO as GPIO
 
 pid_file = os.path.dirname(os.path.realpath(__file__)) + '/../var/interaction.pid';
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(17, GPIO.OUT)
-GPIO.setup(22, GPIO.OUT)
-
 # -----------------------------------------------------------------------------
-# kill running and replace pid file
+# kill running 
 if os.path.isfile(pid_file):
     with open(pid_file) as f:
         pid = f.read()
 
     try:
+        print >> sys.stderr,  "Killing previous interaction with with pid " + str(pid)
         os.kill(int(pid), signal.SIGTERM) 
     except OSError:
         pass
@@ -25,24 +23,22 @@ if os.path.isfile(pid_file):
     f.close()
     os.remove(pid_file)
 
-
-pid = os.getpgid(0);
-f = open(pid_file, 'w')
-f.write(str(pid))
-f.close()
-
 # -----------------------------------------------------------------------------
 # stop the body motor
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.OUT)
+GPIO.setup(22, GPIO.OUT)
+
 GPIO.output(17, GPIO.LOW)
 
 # tap the tail a bit
 GPIO.output(22, GPIO.HIGH)
-sleep(.05)
+sleep(.1)
 GPIO.output(22, GPIO.LOW)
 sleep(.5);
 GPIO.output(22, GPIO.HIGH)
-sleep(.05)
+sleep(.1)
 GPIO.output(22, GPIO.LOW)
-
-GPIO.cleanup()
 
