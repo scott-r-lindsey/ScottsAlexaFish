@@ -24,11 +24,11 @@ if os.path.isfile(pid_file):
     with open(pid_file) as f:
         pid = f.read()
 
-#    try:
-#        os.kill(int(pid), signal.SIGTERM)
-#    except OSError:
-#        pass
-#
+    try:
+        os.kill(int(pid), signal.SIGTERM)
+    except OSError:
+        pass
+
     f.close()
     os.remove(pid_file)
 
