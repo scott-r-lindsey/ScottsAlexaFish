@@ -37,8 +37,4 @@ GPIO.output(17, GPIO.LOW)
 GPIO.output(22, GPIO.HIGH)
 sleep(.1)
 GPIO.output(22, GPIO.LOW)
-sleep(.5);
-GPIO.output(22, GPIO.HIGH)
-sleep(.1)
-GPIO.output(22, GPIO.LOW)
 
