@@ -55,8 +55,10 @@ GPIO.output(17, GPIO.HIGH)
 
 # a tail tap should be between .08 and .16 seconds long
 # a pause should be between .4 and .7 seconds long
+# we tap the tail for four seconds only
+# because the sound of the tail can confuse the microphone
 i = 0.1
-while (i < 30):
+while (i < 4): 
     tap = random.uniform(.03, .10)
     pause = random.uniform(.4, .9)
 
@@ -73,6 +75,8 @@ while (i < 30):
     i = i + pause
 
     print "i is " + str(i) + "\n"
+
+sleep(25)
 
 # stand down
 GPIO.output(17, GPIO.LOW)
